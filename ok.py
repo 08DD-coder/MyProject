@@ -31,7 +31,7 @@ def _len(landmark, shape, a, b):
 handsDetector = mp.solutions.hands.Hands()
 
 
-frame = cv2.imread("input.png")
+frame = cv2.imread("input.jpg")
 
 flipped = np.fliplr(frame)
 # переводим его в формат RGB для распознавания
@@ -48,16 +48,21 @@ ind_finger_len = _len(results.multi_hand_landmarks[0].landmark, flippedRGB.shape
 mid_finger_len = _len(results.multi_hand_landmarks[0].landmark, flippedRGB.shape, 0, 12)
 ring_finger_len = _len(results.multi_hand_landmarks[0].landmark, flippedRGB.shape, 0, 14)
 pinky_len = _len(results.multi_hand_landmarks[0].landmark, flippedRGB.shape, 0, 18)
-if 2 * r / dp < 1.35:
+ring_finger_len1 = _len(results.multi_hand_landmarks[0].landmark, flippedRGB.shape, 0, 16)
+pinky_len1 = _len(results.multi_hand_landmarks[0].landmark, flippedRGB.shape, 0, 20)
+thumb_len1 = _len(results.multi_hand_landmarks[0].landmark, flippedRGB.shape, 0, 4)
+if 2 * r / dp < 1.5:
     print("Stone")
 else:
-    if ind_finger_len / mid_finger_len < 1.2 and (thumb_len / ring_finger_len < 1.2 and thumb_len / pinky_len < 1.2):
+    if ind_finger_len / mid_finger_len < 1.3 and (thumb_len / ring_finger_len < 1.3 and thumb_len / pinky_len < 1.3)\
+            and not (pinky_len1 > pinky_len or ring_finger_len1 > ring_finger_len):
         print("Sissors")
     else:
-        if 2 * r / dh < 1.2:
+        if 2 * r / dh < 1.5:
             print("Paper")
 
 res_image = cv2.cvtColor(flippedRGB, cv2.COLOR_RGB2BGR)
+mp.solutions.drawing_utils.draw_landmarks(res_image, results.multi_hand_landmarks[0])
 cv2.imwrite("image.png", res_image)
 
 
