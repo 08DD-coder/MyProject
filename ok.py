@@ -101,7 +101,7 @@ while(cap.isOpened()):
             i1 += 1
             if i1 == 10:
                 cv2.putText(flippedRGB, "Second Player won!", (175, 25), cv2.FONT_HERSHEY_SIMPLEX, 1, [0, 0, 0], 4)
-                wins2 += 2
+                wins2 += 1
                 while cv2.waitKey(1) & 0xFF != ord('e'):
                     res_image = cv2.cvtColor(flippedRGB, cv2.COLOR_RGB2BGR)
                     cv2.imshow("Hands", res_image)
