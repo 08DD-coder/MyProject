@@ -157,5 +157,8 @@ while(cap.isOpened()):
     # переводим в BGR и показываем результат
     res_image = cv2.cvtColor(flippedRGB, cv2.COLOR_RGB2BGR)
     cv2.imshow("Hands", res_image)
+    if cv2.waitKey(1) & 0xFF == ord('w'):
+        wins1 = 0
+        wins2 = 0
 # освобождаем ресурсы
 handsDetector.close()
